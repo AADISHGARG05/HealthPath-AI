@@ -1,0 +1,374 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f0fdfa 0%, #d9f2ee 100%);
+    min-height: 100vh;
+    color: #2c3e50;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page {
+    display: none;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    color: #2ab7ca;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.header p {
+    font-size: 1.2em;
+    color: #547980;
+    margin-bottom: 30px;
+}
+
+/* Cards */
+.card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    border: 1px solid #cfeae7;
+}
+
+/* Buttons */
+.btn {
+    background: linear-gradient(135deg, #2ab7ca 0%, #88d8b0 100%);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(42, 183, 202, 0.3);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #95a5a6 0%, #bdc3c7 100%);
+}
+
+.btn-secondary:hover {
+    box-shadow: 0 8px 25px rgba(149, 165, 166, 0.3);
+}
+
+/* Home Page */
+.hero {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.hero-icon {
+    font-size: 4em;
+    color: #2ab7ca;
+    margin-bottom: 30px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.feature {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.feature i {
+    font-size: 2.5em;
+    color: #2ab7ca;
+    margin-bottom: 20px;
+}
+
+.feature h3 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.feature p {
+    color: #547980;
+    line-height: 1.6;
+}
+
+/* Symptoms Selection */
+.symptoms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.symptom-category {
+    background: #f9fdfd;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid #ccebe9;
+    transition: all 0.3s ease;
+}
+
+.symptom-category:hover {
+    border-color: #2ab7ca;
+    transform: translateY(-2px);
+}
+
+.category-header {
+    background: linear-gradient(135deg, #2ab7ca 0%, #88d8b0 100%);
+    color: white;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.category-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.category-content.expanded {
+    max-height: 600px;
+}
+
+.symptoms-list {
+    padding: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #2ab7ca #f0f0f0;
+}
+
+.symptoms-list::-webkit-scrollbar {
+    width: 6px;
+}
+.symptoms-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+.symptoms-list::-webkit-scrollbar-thumb {
+    background-color: #2ab7ca;
+    border-radius: 3px;
+}
+
+.symptom-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.symptom-item:last-child {
+    border-bottom: none;
+}
+
+.symptom-checkbox {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    accent-color: #2ab7ca;
+}
+
+.symptom-label {
+    flex: 1;
+    font-size: 1em;
+    color: #2c3e50;
+    cursor: pointer;
+}
+
+.selected-count {
+    background: #2ab7ca;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Results Page */
+.result-card {
+    text-align: center;
+    padding: 50px 40px;
+}
+
+.result-icon {
+    font-size: 4em;
+    color: #e74c3c;
+    margin-bottom: 30px;
+}
+
+.predicted-disease {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #e74c3c;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe6e6 100%);
+    border-radius: 15px;
+    border: 2px solid #ffebee;
+}
+
+.confidence-score {
+    font-size: 1.3em;
+    color: #2ab7ca;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.top-predictions {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.top-predictions h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.prediction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.prediction-item:last-child {
+    border-bottom: none;
+}
+
+.disease-name {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.probability {
+    background: #2ab7ca;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.disclaimer {
+    background: #fffbe5;
+    border: 1px solid #fef3c7;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 30px 0;
+    color: #7f6000;
+}
+
+.disclaimer i {
+    color: #f1c40f;
+    margin-right: 10px;
+}
+
+.selected-symptoms {
+    background: #e8fef8;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 30px 0;
+}
+
+.selected-symptoms h4 {
+    color: #2ab7ca;
+    margin-bottom: 15px;
+}
+
+.symptom-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.symptom-tag {
+    background: #2ab7ca;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 2em;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .symptoms-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
