@@ -5,10 +5,6 @@
 ![Frontend](https://img.shields.io/badge/Frontend-HTML%2FCSS%2FJS-yellow?style=for-the-badge&logo=javascript)
 ![ML Model](https://img.shields.io/badge/Model-Logistic%20Regression-purple?style=for-the-badge&logo=scikit-learn)
 
-## 🌐 Live Demo
-> Coming Soon...
-
----
 
 ## 📌 Description
 
