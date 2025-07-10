@@ -1,4 +1,4 @@
-#🚑 HealthPath AI — AI-Powered Disease Assessment Website
+# 🚑 HealthPath AI — AI-Powered Disease Assessment Website
 
 ![HealthPath AI](https://img.shields.io/badge/HealthPath-AI-green?style=for-the-badge&logo=medical-services)
 ![Made with Python](https://img.shields.io/badge/Made%20with-Python-blue?style=for-the-badge&logo=python)
