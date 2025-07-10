@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Disease Prediction</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static\style.css">
+    
+
+
+</head>
+<body>
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="header">
+                <h1><i class="fas fa-heartbeat"></i> AI-Powered Disease Prediction</h1>
+                <p>Select your symptoms and get a prediction instantly using our ML model</p>
+            </div>
+            
+            <div class="card">
+                <div class="hero">
+                    <div class="hero-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <p style="font-size: 1.3em; margin-bottom: 40px; color: #7f8c8d;">
+                        Get accurate disease predictions based on your symptoms using advanced machine learning technology.
+                    </p>
+                    <button class="btn" onclick="showPage('symptoms')">
+                        <i class="fas fa-search"></i> Start Diagnosis
+                    </button>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-brain"></i>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Our advanced machine learning model analyzes your symptoms to provide accurate predictions</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-clock"></i>
+                    <h3>Instant Results</h3>
+                    <p>Get your prediction results immediately after symptom selection</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Privacy First</h3>
+                    <p>Your data is processed securely and never stored or shared</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Symptoms Selection Page -->
+        <div id="symptoms" class="page">
+            <div class="header">
+                <h1><i class="fas fa-clipboard-list"></i> Select Your Symptoms</h1>
+                <p>Choose the symptoms you're experiencing (select 3-15 symptoms)</p>
+            </div>
+
+            <div class="card">
+                <div class="selected-count">
+                    Selected: <span id="symptom-count">0</span> symptoms
+                </div>
+
+                <div class="symptoms-grid" id="symptoms-grid">
+                    <!-- Symptoms will be populated by JavaScript -->
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="clearAllSymptoms()">
+                        <i class="fas fa-eraser"></i> Clear All
+                    </button>
+                    <button class="btn" onclick="submitSymptoms()" id="submit-btn" disabled>
+                        <i class="fas fa-search"></i> Get Prediction
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Page -->
+        <div id="results" class="page">
+            <div class="header">
+                <h1><i class="fas fa-chart-line"></i> Prediction Results</h1>
+                <p>Based on your selected symptoms</p>
+            </div>
+
+            <div class="card">
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-diagnoses"></i>
+                    </div>
+                    
+                    <div class="predicted-disease" id="predicted-disease">
+                        <!-- Disease name will be populated -->
+                    </div>
+                    
+                    <div class="confidence-score" id="confidence-score">
+                        <!-- Confidence score will be populated -->
+                    </div>
+
+                    <div class="selected-symptoms">
+                        <h4><i class="fas fa-list"></i> Your Selected Symptoms:</h4>
+                        <div class="symptom-tags" id="selected-symptoms-display">
+                            <!-- Selected symptoms will be displayed here -->
+                        </div>
+                    </div>
+
+                    <div class="top-predictions">
+                        <h3><i class="fas fa-trophy"></i> Top 3 Predictions:</h3>
+                        <div id="top-predictions-list">
+                            <!-- Top predictions will be populated -->
+                        </div>
+                    </div>
+
+                    <div class="disclaimer">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Medical Disclaimer:</strong> This prediction is for informational purposes only and should not replace professional medical advice. Please consult with a healthcare provider for proper diagnosis and treatment.
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn" onclick="showPage('symptoms')">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                        <button class="btn btn-secondary" onclick="showPage('home')">
+                            <i class="fas fa-home"></i> Back to Home
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample symptoms data organized by categories
+        const symptomsData = {
+    "Respiratory": [
+        "Apnea", "Breathing fast", "Congestion in chest", "Cough", "Coughing up sputum",
+        "Difficulty breathing", "Difficulty speaking", "Drainage in throat", "Hoarse voice",
+        "Hurts to breath", "Nasal congestion", "Shortness of breath", "Sore throat",
+        "Swollen or red tonsils", "Throat irritation", "Throat redness", "Throat swelling", "Wheezing"
+    ],
+    "Gastrointestinal": [
+        "Abdominal distention", "Blood in stool", "Burning abdominal pain", "Changes in stool appearance",
+        "Constipation", "Diarrhea", "Discharge in stools", "Feeling ill", "Flatulence",
+        "Incontinence of stool", "Lower abdominal pain", "Melena", "Nausea", "Pain of the anus",
+        "Rectal bleeding", "Regurgitation", "Sharp abdominal pain", "Stomach bloating",
+        "Swollen abdomen", "Upper abdominal pain", "Vomiting"
+    ],
+    "Neurological": [
+        "Abusing alcohol", "Antisocial behavior", "Anxiety and nervousness", "Delusions or hallucinations",
+        "Depression", "Disturbance of memory", "Dizziness", "Drug abuse", "Fears and phobias",
+        "Focal weakness", "Headache", "Hostile behavior", "Hysterical behavior", "Insomnia",
+        "Loss of sensation", "Low self-esteem", "Nightmares", "Obsessions and compulsions",
+        "Paresthesia", "Restlessness", "Seizures", "Sleepiness", "Sleepwalking", "Slurring words",
+        "Stuttering or stammering"
+    ],
+    "Musculoskeletal": [
+        "Arm pain", "Arm stiffness or tightness", "Back pain", "Back stiffness or tightness",
+        "Cramps and spasms", "Elbow pain", "Elbow stiffness or tightness", "Foot or toe pain",
+        "Foot or toe stiffness or tightness", "Hip pain", "Hip stiffness or tightness", "Joint pain",
+        "Joint stiffness or tightness", "Knee pain", "Knee stiffness or tightness", "Leg pain",
+        "Leg stiffness or tightness", "Muscle cramps, contractures, or spasms", "Muscle pain",
+        "Muscle weakness", "Neck stiffness or tightness", "Shoulder pain", "Shoulder stiffness or tightness",
+        "Wrist pain"
+    ],
+    "Cardiovascular": [
+        "Blood clots during menstrual periods", "Chest tightness", "Decreased heart rate",
+        "Feeling cold", "Feeling hot and cold", "Heartburn", "Increased heart rate",
+        "Irregular heartbeat", "Palpitations", "Peripheral edema", "Poor circulation", "Sharp chest pain"
+    ],
+    "Skin": [
+        "Acne or pimples", "Dry lips", "Itching of skin", "Skin dryness, peeling, scaliness, or roughness",
+        "Skin growth", "Skin irritation", "Skin lesion", "Skin moles", "Skin oiliness",
+        "Skin on arm or hand looks infected", "Skin on head or neck looks infected",
+        "Skin on leg or foot looks infected", "Skin pain", "Skin rash", "Skin swelling", "Wrinkles on skin"
+    ],
+    "General": [
+        "Fever", "Cough", "Headache", "Fatigue", "Dizziness", "Nasal congestion (Coryza)",
+        "Sore throat", "Chest tightness", "Shortness of breath", "Vomiting", "Diarrhea",
+        "Abdominal pain", "Back pain", "Joint pain", "Sneezing"
+    ]
+};
+        let selectedSymptoms = [];
+
+// Call backend model prediction API
+function predictDisease(symptoms) {
+    return fetch("http://127.0.0.1:5000/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ symptoms: symptoms })
+    })
+    .then(res => res.json())
+    .then(data => {
+        return data.predictions || [{
+            disease: "Unknown Condition",
+            confidence: 0
+        }];
+    })
+    .catch(err => {
+        console.error("❌ Prediction failed:", err);
+        return [{
+            disease: "Server Error",
+            confidence: 0
+        }];
+    });
+}
+
+
+
+// Async submit handler
+function submitSymptoms() {
+        if (selectedSymptoms.length < 3 || selectedSymptoms.length > 15) {
+            alert("Please select between 3 and 15 symptoms.");
+            return;
+        }
+
+        // Call the backend and show results
+        predictDisease(selectedSymptoms).then(prediction => {
+            displayResults(prediction);
+            showPage('results');
+        });
+    }
+// Display results
+function displayResults(predictions) {
+    const diseaseElement = document.getElementById('predicted-disease');
+    const confidenceElement = document.getElementById('confidence-score');
+    const topPredictionsElement = document.getElementById('top-predictions-list');
+    const selectedSymptomsElement = document.getElementById('selected-symptoms-display');
+
+    const mainPrediction = predictions[0];
+    diseaseElement.textContent = mainPrediction.disease;
+    confidenceElement.textContent = `Confidence: ${(mainPrediction.confidence * 100).toFixed(1)}%`;
+
+    selectedSymptomsElement.innerHTML = selectedSymptoms.map(symptom =>
+        `<span class="symptom-tag">${symptom}</span>`
+    ).join('');
+
+    topPredictionsElement.innerHTML = predictions.slice(0, 3).map(prediction => `
+        <div class="prediction-item">
+            <span class="disease-name">${prediction.disease}</span>
+            <span class="probability">${(prediction.confidence * 100).toFixed(1)}%</span>
+        </div>
+    `).join('');
+}
+
+// Initialize the app
+function initializeApp() {
+    createSymptomsGrid();
+    updateSymptomCount();
+}
+
+// Create symptoms grid
+function createSymptomsGrid() {
+    const grid = document.getElementById('symptoms-grid');
+    grid.innerHTML = '';
+
+    Object.entries(symptomsData).forEach(([category, symptoms]) => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'symptom-category';
+
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'category-header';
+        headerDiv.innerHTML = `
+            <span><i class="fas fa-${getCategoryIcon(category)}"></i> ${category}</span>
+            <i class="fas fa-chevron-down"></i>
+        `;
+
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'category-content';
+
+        const symptomsList = document.createElement('div');
+        symptomsList.className = 'symptoms-list';
+
+        symptoms.forEach(symptom => {
+            const item = document.createElement('div');
+            item.className = 'symptom-item';
+            item.innerHTML = `
+                <input type="checkbox" class="symptom-checkbox" id="${symptom}" value="${symptom}" onchange="toggleSymptom('${symptom}')">
+                <label class="symptom-label" for="${symptom}">${symptom}</label>
+            `;
+            symptomsList.appendChild(item);
+        });
+
+        contentDiv.appendChild(symptomsList);
+        categoryDiv.appendChild(headerDiv);
+        categoryDiv.appendChild(contentDiv);
+        grid.appendChild(categoryDiv);
+
+        headerDiv.addEventListener('click', () => {
+            contentDiv.classList.toggle('expanded');
+            const icon = headerDiv.querySelector('.fa-chevron-down');
+            icon.style.transform = contentDiv.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    });
+}
+
+// Toggle symptom selection
+function toggleSymptom(symptom) {
+    const checkbox = document.getElementById(symptom);
+    if (checkbox.checked) {
+        if (!selectedSymptoms.includes(symptom)) {
+            selectedSymptoms.push(symptom);
+        }
+    } else {
+        selectedSymptoms = selectedSymptoms.filter(s => s !== symptom);
+    }
+    updateSymptomCount();
+}
+
+// Update symptom count
+function updateSymptomCount() {
+    const countElement = document.getElementById('symptom-count');
+    const submitBtn = document.getElementById('submit-btn');
+
+    countElement.textContent = selectedSymptoms.length;
+    if (selectedSymptoms.length >= 3 && selectedSymptoms.length <= 15) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+    } else {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+    }
+}
+
+// Clear symptoms
+function clearAllSymptoms() {
+    selectedSymptoms = [];
+    document.querySelectorAll('.symptom-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    updateSymptomCount();
+}
+
+// Show page
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+}
+
+// Get category icons
+function getCategoryIcon(category) {
+    const icons = {
+        "Respiratory": "lungs",
+        "Gastrointestinal": "stomach",
+        "Neurological": "brain",
+        "Musculoskeletal": "bone",
+        "Cardiovascular": "heart",
+        "Skin": "hand-paper",
+        "General": "thermometer-half"
+    };
+    return icons[category] || "circle";
+}
+
+// Load app on DOM ready
+document.addEventListener('DOMContentLoaded', initializeApp);
+
+    </script>
+</body>
+</html>
