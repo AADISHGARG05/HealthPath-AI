@@ -29,9 +29,9 @@
 
 ## 🖥️ Screenshots
 
-<img src="screenshots/homepage.png" width="100%" alt="Home Page"/>
-<img src="screenshots/symptoms.png" width="100%" alt="Symptoms Selection"/>
-<img src="screenshots/prediction.png" width="100%" alt="Prediction Results"/>
+<img src="screenshots/Homepage.png" width="100%" alt="Home Page"/>
+<img src="screenshots/Symptoms.png" width="100%" alt="Symptoms Selection"/>
+<img src="screenshots/Prediction.png" width="100%" alt="Prediction Results"/>
 
 ---
 
